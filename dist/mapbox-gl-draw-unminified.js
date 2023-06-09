@@ -6854,7 +6854,7 @@ function setupAPI (ctx, api) {
   };
 
   api.set = function (featureCollection) {
-    console.log("DEPENDANCY WORKING");
+    console.log("hello");
     if (
       featureCollection.type === undefined ||
       featureCollection.type !== geojsonTypes.FEATURE_COLLECTION ||

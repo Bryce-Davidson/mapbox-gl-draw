@@ -57,7 +57,7 @@ export default function (ctx, api) {
   };
 
   api.set = function (featureCollection) {
-    console.log("DEPENDANCY WORKING");
+    console.log("hello");
     if (
       featureCollection.type === undefined ||
       featureCollection.type !== Constants.geojsonTypes.FEATURE_COLLECTION ||
