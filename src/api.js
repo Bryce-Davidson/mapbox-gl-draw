@@ -5,6 +5,7 @@ import featuresAt from "./lib/features_at";
 import stringSetsAreEqual from "./lib/string_sets_are_equal";
 import * as Constants from "./constants";
 import StringSet from "./lib/string_set";
+import objectShallowEquals from "./lib/object_shallow_equals";
 
 import Polygon from "./feature_types/polygon";
 import LineString from "./feature_types/line_string";
@@ -57,7 +58,6 @@ export default function (ctx, api) {
   };
 
   api.set = function (featureCollection) {
-    console.log("hello");
     if (
       featureCollection.type === undefined ||
       featureCollection.type !== Constants.geojsonTypes.FEATURE_COLLECTION ||
@@ -103,6 +103,13 @@ export default function (ctx, api) {
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
         const internalFeature = ctx.store.get(feature.id);
+        // If the immediate properties have changed, rerender
+        if (
+          !objectShallowEquals(internalFeature.properties, feature.properties)
+        ) {
+          // indicate changed immediate properties
+          ctx.store.featureChanged(internalFeature.id);
+        }
         internalFeature.properties = feature.properties;
         if (
           !isEqual(

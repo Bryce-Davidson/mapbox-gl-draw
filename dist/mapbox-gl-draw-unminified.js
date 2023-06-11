@@ -1736,7 +1736,7 @@ function Store(ctx) {
   this.ctx = ctx;
   this.sources = {
     hot: [],
-    cold: []
+    cold: [],
   };
 
   // Deduplicate requests to render and tie them to animation frames.
@@ -1752,17 +1752,16 @@ function Store(ctx) {
   this.isDirty = false;
 }
 
-
 /**
  * Delays all rendering until the returned function is invoked
  * @return {Function} renderBatch
  */
-Store.prototype.createRenderBatch = function() {
+Store.prototype.createRenderBatch = function () {
   var this$1$1 = this;
 
   var holdRender = this.render;
   var numRenders = 0;
-  this.render = function() {
+  this.render = function () {
     numRenders++;
   };
 
@@ -1778,7 +1777,7 @@ Store.prototype.createRenderBatch = function() {
  * Sets the store's state to dirty.
  * @return {Store} this
  */
-Store.prototype.setDirty = function() {
+Store.prototype.setDirty = function () {
   this.isDirty = true;
   return this;
 };
@@ -1788,7 +1787,7 @@ Store.prototype.setDirty = function() {
  * @param {string} featureId
  * @return {Store} this
  */
-Store.prototype.featureChanged = function(featureId) {
+Store.prototype.featureChanged = function (featureId) {
   this._changedFeatureIds.add(featureId);
   return this;
 };
@@ -1797,7 +1796,7 @@ Store.prototype.featureChanged = function(featureId) {
  * Gets the ids of all features currently in changed state.
  * @return {Store} this
  */
-Store.prototype.getChangedIds = function() {
+Store.prototype.getChangedIds = function () {
   return this._changedFeatureIds.values();
 };
 
@@ -1805,7 +1804,7 @@ Store.prototype.getChangedIds = function() {
  * Sets all features to unchanged state.
  * @return {Store} this
  */
-Store.prototype.clearChangedIds = function() {
+Store.prototype.clearChangedIds = function () {
   this._changedFeatureIds.clear();
   return this;
 };
@@ -1814,7 +1813,7 @@ Store.prototype.clearChangedIds = function() {
  * Gets the ids of all features in the store.
  * @return {Store} this
  */
-Store.prototype.getAllIds = function() {
+Store.prototype.getAllIds = function () {
   return this._featureIds.values();
 };
 
@@ -1824,7 +1823,7 @@ Store.prototype.getAllIds = function() {
  *
  * @return {Store} this
  */
-Store.prototype.add = function(feature) {
+Store.prototype.add = function (feature) {
   this.featureChanged(feature.id);
   this._features[feature.id] = feature;
   this._featureIds.add(feature.id);
@@ -1841,7 +1840,7 @@ Store.prototype.add = function(feature) {
  * @param {Object} [options.silent] - If `true`, this invocation will not fire an event.
  * @return {Store} this
  */
-Store.prototype.delete = function(featureIds, options) {
+Store.prototype.delete = function (featureIds, options) {
   var this$1$1 = this;
   if ( options === void 0 ) options = {};
 
@@ -1865,7 +1864,7 @@ Store.prototype.delete = function(featureIds, options) {
  * Returns a feature in the store matching the specified value.
  * @return {Object | undefined} feature
  */
-Store.prototype.get = function(id) {
+Store.prototype.get = function (id) {
   return this._features[id];
 };
 
@@ -1873,7 +1872,7 @@ Store.prototype.get = function(id) {
  * Returns all features in the store.
  * @return {Array<Object>}
  */
-Store.prototype.getAll = function() {
+Store.prototype.getAll = function () {
   var this$1$1 = this;
 
   return Object.keys(this._features).map(function (id) { return this$1$1._features[id]; });
@@ -1886,7 +1885,7 @@ Store.prototype.getAll = function() {
  * @param {Object} [options.silent] - If `true`, this invocation will not fire an event.
  * @return {Store} this
  */
-Store.prototype.select = function(featureIds, options) {
+Store.prototype.select = function (featureIds, options) {
   var this$1$1 = this;
   if ( options === void 0 ) options = {};
 
@@ -1908,7 +1907,7 @@ Store.prototype.select = function(featureIds, options) {
  * @param {Object} [options.silent] - If `true`, this invocation will not fire an event.
  * @return {Store} this
  */
-Store.prototype.deselect = function(featureIds, options) {
+Store.prototype.deselect = function (featureIds, options) {
   var this$1$1 = this;
   if ( options === void 0 ) options = {};
 
@@ -1930,7 +1929,7 @@ Store.prototype.deselect = function(featureIds, options) {
  * @param {Object} [options.silent] - If `true`, this invocation will not fire an event.
  * @return {Store} this
  */
-Store.prototype.clearSelected = function(options) {
+Store.prototype.clearSelected = function (options) {
   if ( options === void 0 ) options = {};
 
   this.deselect(this._selectedFeatureIds.values(), { silent: options.silent });
@@ -1945,17 +1944,25 @@ Store.prototype.clearSelected = function(options) {
  * @param {Object} [options.silent] - If `true`, this invocation will not fire an event.
  * @return {Store} this
  */
-Store.prototype.setSelected = function(featureIds, options) {
+Store.prototype.setSelected = function (featureIds, options) {
   var this$1$1 = this;
   if ( options === void 0 ) options = {};
 
   featureIds = toDenseArray(featureIds);
 
   // Deselect any features not in the new selection
-  this.deselect(this._selectedFeatureIds.values().filter(function (id) { return featureIds.indexOf(id) === -1; }), { silent: options.silent });
+  this.deselect(
+    this._selectedFeatureIds
+      .values()
+      .filter(function (id) { return featureIds.indexOf(id) === -1; }),
+    { silent: options.silent }
+  );
 
   // Select any features in the new selection that were not already selected
-  this.select(featureIds.filter(function (id) { return !this$1$1._selectedFeatureIds.has(id); }), { silent: options.silent });
+  this.select(
+    featureIds.filter(function (id) { return !this$1$1._selectedFeatureIds.has(id); }),
+    { silent: options.silent }
+  );
 
   return this;
 };
@@ -1965,7 +1972,7 @@ Store.prototype.setSelected = function(featureIds, options) {
  * @param {Array<Array<string>>} coordinates
  * @return {Store} this
  */
-Store.prototype.setSelectedCoordinates = function(coordinates) {
+Store.prototype.setSelectedCoordinates = function (coordinates) {
   this._selectedCoordinates = coordinates;
   this._emitSelectionChange = true;
   return this;
@@ -1976,7 +1983,7 @@ Store.prototype.setSelectedCoordinates = function(coordinates) {
  * @param {Object} [options]
  * @return {Store} this
  */
-Store.prototype.clearSelectedCoordinates = function() {
+Store.prototype.clearSelectedCoordinates = function () {
   this._selectedCoordinates = [];
   this._emitSelectionChange = true;
   return this;
@@ -1986,7 +1993,7 @@ Store.prototype.clearSelectedCoordinates = function() {
  * Returns the ids of features in the current selection.
  * @return {Array<string>} Selected feature ids.
  */
-Store.prototype.getSelectedIds = function() {
+Store.prototype.getSelectedIds = function () {
   return this._selectedFeatureIds.values();
 };
 
@@ -1994,7 +2001,7 @@ Store.prototype.getSelectedIds = function() {
  * Returns features in the current selection.
  * @return {Array<Object>} Selected features.
  */
-Store.prototype.getSelected = function() {
+Store.prototype.getSelected = function () {
   var this$1$1 = this;
 
   return this._selectedFeatureIds.values().map(function (id) { return this$1$1.get(id); });
@@ -2004,13 +2011,13 @@ Store.prototype.getSelected = function() {
  * Returns selected coordinates in the currently selected feature.
  * @return {Array<Object>} Selected coordinates.
  */
-Store.prototype.getSelectedCoordinates = function() {
+Store.prototype.getSelectedCoordinates = function () {
   var this$1$1 = this;
 
   var selected = this._selectedCoordinates.map(function (coordinate) {
     var feature = this$1$1.get(coordinate.feature_id);
     return {
-      coordinates: feature.getCoordinate(coordinate.coord_path)
+      coordinates: feature.getCoordinate(coordinate.coord_path),
     };
   });
   return selected;
@@ -2021,7 +2028,7 @@ Store.prototype.getSelectedCoordinates = function() {
  * @param {string} featureId
  * @return {boolean} `true` if the feature is selected, `false` if not.
  */
-Store.prototype.isSelected = function(featureId) {
+Store.prototype.isSelected = function (featureId) {
   return this._selectedFeatureIds.has(featureId);
 };
 
@@ -2030,15 +2037,19 @@ Store.prototype.isSelected = function(featureId) {
  * @param {string} featureId
  * @param {string} property property
  * @param {string} property value
-*/
-Store.prototype.setFeatureProperty = function(featureId, property, value) {
+ */
+Store.prototype.setFeatureProperty = function (featureId, property, value) {
   this.get(featureId).setProperty(property, value);
   this.featureChanged(featureId);
 };
 
 function refreshSelectedCoordinates(store, options) {
-  var newSelectedCoordinates = store._selectedCoordinates.filter(function (point) { return store._selectedFeatureIds.has(point.feature_id); });
-  if (store._selectedCoordinates.length !== newSelectedCoordinates.length && !options.silent) {
+  var newSelectedCoordinates = store._selectedCoordinates.filter(function (point) { return store._selectedFeatureIds.has(point.feature_id); }
+  );
+  if (
+    store._selectedCoordinates.length !== newSelectedCoordinates.length &&
+    !options.silent
+  ) {
     store._emitSelectionChange = true;
   }
   store._selectedCoordinates = newSelectedCoordinates;
@@ -2046,22 +2057,23 @@ function refreshSelectedCoordinates(store, options) {
 
 /**
  * Stores the initial config for a map, so that we can set it again after we're done.
-*/
-Store.prototype.storeMapConfig = function() {
+ */
+Store.prototype.storeMapConfig = function () {
   var this$1$1 = this;
 
   interactions.forEach(function (interaction) {
     var interactionSet = this$1$1.ctx.map[interaction];
     if (interactionSet) {
-      this$1$1._mapInitialConfig[interaction] = this$1$1.ctx.map[interaction].isEnabled();
+      this$1$1._mapInitialConfig[interaction] =
+        this$1$1.ctx.map[interaction].isEnabled();
     }
   });
 };
 
 /**
  * Restores the initial config for a map, ensuring all is well.
-*/
-Store.prototype.restoreMapConfig = function() {
+ */
+Store.prototype.restoreMapConfig = function () {
   var this$1$1 = this;
 
   Object.keys(this._mapInitialConfig).forEach(function (key) {
@@ -2079,8 +2091,8 @@ Store.prototype.restoreMapConfig = function() {
  * @param {string} interaction
  * @return {boolean} `true` if the interaction is enabled, `false` if not.
  * Defaults to `true`. (Todo: include defaults.)
-*/
-Store.prototype.getInitialConfigValue = function(interaction) {
+ */
+Store.prototype.getInitialConfigValue = function (interaction) {
   if (this._mapInitialConfig[interaction] !== undefined) {
     return this._mapInitialConfig[interaction];
   } else {
@@ -6808,6 +6820,17 @@ function stringSetsAreEqual(a, b) {
   return JSON.stringify(a.map(function (id) { return id; }).sort()) === JSON.stringify(b.map(function (id) { return id; }).sort());
 }
 
+function objectShallowEquals(a, b) {
+  if (a === b) { return true; }
+  if (a === null || b === null) { return false; }
+
+  var ka = Object.keys(a);
+  var kb = Object.keys(b);
+  if (ka.length !== kb.length) { return false; }
+
+  return ka.every(function (ki) { return a[ki] === b[ki]; });
+}
+
 var featureTypes = {
   Polygon: Polygon,
   LineString: LineString,
@@ -6854,7 +6877,6 @@ function setupAPI (ctx, api) {
   };
 
   api.set = function (featureCollection) {
-    console.log("hello");
     if (
       featureCollection.type === undefined ||
       featureCollection.type !== geojsonTypes.FEATURE_COLLECTION ||
@@ -6900,6 +6922,14 @@ function setupAPI (ctx, api) {
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
         var internalFeature$1 = ctx.store.get(feature.id);
+        // If the immediate properties have changed, rerender
+        if (
+          !objectShallowEquals(internalFeature$1.properties, feature.properties)
+        ) {
+          console.log("changed properties");
+          // indicate changed immediate properties
+          ctx.store.featureChanged(internalFeature$1.id);
+        }
         internalFeature$1.properties = feature.properties;
         if (
           !isEqual(
