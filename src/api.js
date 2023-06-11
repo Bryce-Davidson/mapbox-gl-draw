@@ -103,7 +103,7 @@ export default function (ctx, api) {
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
         const internalFeature = ctx.store.get(feature.id);
-        // If the immediate properties have changed, rerender
+        // If the immediate properties have changed
         if (
           !objectShallowEquals(internalFeature.properties, feature.properties)
         ) {
