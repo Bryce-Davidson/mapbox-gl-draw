@@ -6888,6 +6888,7 @@ function setupAPI (ctx, api) {
         ctx.store.add(internalFeature);
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
+        console.log("Working Link");
         var internalFeature$1 = ctx.store.get(feature.id);
         // If the immediate properties have changed
         if (
