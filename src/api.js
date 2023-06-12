@@ -102,7 +102,6 @@ export default function (ctx, api) {
         ctx.store.add(internalFeature);
       } else {
         // If a feature of that id has already been created, and we are swapping it out ...
-        console.log("Working Link");
         const internalFeature = ctx.store.get(feature.id);
         // If the immediate properties have changed
         if (
