@@ -44,6 +44,7 @@ export default function (ctx) {
         const _fire = map.fire;
         map.fire = function (type, event) {
           // eslint-disable-next-line
+
           let args = arguments;
 
           if (_fire.length === 1 && arguments.length !== 1) {

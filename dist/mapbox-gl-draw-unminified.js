@@ -249,95 +249,95 @@ function rad(_) {
 }
 
 var classes = {
-  CONTROL_BASE: 'mapboxgl-ctrl',
-  CONTROL_PREFIX: 'mapboxgl-ctrl-',
-  CONTROL_BUTTON: 'mapbox-gl-draw_ctrl-draw-btn',
-  CONTROL_BUTTON_LINE: 'mapbox-gl-draw_line',
-  CONTROL_BUTTON_POLYGON: 'mapbox-gl-draw_polygon',
-  CONTROL_BUTTON_POINT: 'mapbox-gl-draw_point',
-  CONTROL_BUTTON_TRASH: 'mapbox-gl-draw_trash',
-  CONTROL_BUTTON_COMBINE_FEATURES: 'mapbox-gl-draw_combine',
-  CONTROL_BUTTON_UNCOMBINE_FEATURES: 'mapbox-gl-draw_uncombine',
-  CONTROL_GROUP: 'mapboxgl-ctrl-group',
-  ATTRIBUTION: 'mapboxgl-ctrl-attrib',
-  ACTIVE_BUTTON: 'active',
-  BOX_SELECT: 'mapbox-gl-draw_boxselect'
+  CONTROL_BASE: "mapboxgl-ctrl",
+  CONTROL_PREFIX: "mapboxgl-ctrl-",
+  CONTROL_BUTTON: "mapbox-gl-draw_ctrl-draw-btn",
+  CONTROL_BUTTON_LINE: "mapbox-gl-draw_line",
+  CONTROL_BUTTON_POLYGON: "mapbox-gl-draw_polygon",
+  CONTROL_BUTTON_POINT: "mapbox-gl-draw_point",
+  CONTROL_BUTTON_TRASH: "mapbox-gl-draw_trash",
+  CONTROL_BUTTON_COMBINE_FEATURES: "mapbox-gl-draw_combine",
+  CONTROL_BUTTON_UNCOMBINE_FEATURES: "mapbox-gl-draw_uncombine",
+  CONTROL_GROUP: "mapboxgl-ctrl-group",
+  ATTRIBUTION: "mapboxgl-ctrl-attrib",
+  ACTIVE_BUTTON: "active",
+  BOX_SELECT: "mapbox-gl-draw_boxselect",
 };
 
-var SOURCE = 'mapbox-gl-draw';
+var SOURCE = "mapbox-gl-draw";
 
 var cursors = {
-  ADD: 'add',
-  MOVE: 'move',
-  DRAG: 'drag',
-  POINTER: 'pointer',
-  NONE: 'none'
+  ADD: "add",
+  MOVE: "move",
+  DRAG: "drag",
+  POINTER: "pointer",
+  NONE: "none",
 };
 
 var types$1 = {
-  POLYGON: 'polygon',
-  LINE: 'line_string',
-  POINT: 'point'
+  POLYGON: "polygon",
+  LINE: "line_string",
+  POINT: "point",
 };
 
 var geojsonTypes = {
-  FEATURE: 'Feature',
-  POLYGON: 'Polygon',
-  LINE_STRING: 'LineString',
-  POINT: 'Point',
-  FEATURE_COLLECTION: 'FeatureCollection',
-  MULTI_PREFIX: 'Multi',
-  MULTI_POINT: 'MultiPoint',
-  MULTI_LINE_STRING: 'MultiLineString',
-  MULTI_POLYGON: 'MultiPolygon'
+  FEATURE: "Feature",
+  POLYGON: "Polygon",
+  LINE_STRING: "LineString",
+  POINT: "Point",
+  FEATURE_COLLECTION: "FeatureCollection",
+  MULTI_PREFIX: "Multi",
+  MULTI_POINT: "MultiPoint",
+  MULTI_LINE_STRING: "MultiLineString",
+  MULTI_POLYGON: "MultiPolygon",
 };
 
 var modes$1 = {
-  DRAW_LINE_STRING: 'draw_line_string',
-  DRAW_POLYGON: 'draw_polygon',
-  DRAW_POINT: 'draw_point',
-  SIMPLE_SELECT: 'simple_select',
-  DIRECT_SELECT: 'direct_select',
-  STATIC: 'static'
+  DRAW_LINE_STRING: "draw_line_string",
+  DRAW_POLYGON: "draw_polygon",
+  DRAW_POINT: "draw_point",
+  SIMPLE_SELECT: "simple_select",
+  DIRECT_SELECT: "direct_select",
+  STATIC: "static",
 };
 
 var events$1 = {
-  CREATE: 'draw.create',
-  DELETE: 'draw.delete',
-  UPDATE: 'draw.update',
-  SELECTION_CHANGE: 'draw.selectionchange',
-  MODE_CHANGE: 'draw.modechange',
-  ACTIONABLE: 'draw.actionable',
-  RENDER: 'draw.render',
-  COMBINE_FEATURES: 'draw.combine',
-  UNCOMBINE_FEATURES: 'draw.uncombine'
+  FEATURE_MOVING: "draw.featuremoving",
+  CREATE: "draw.create",
+  DELETE: "draw.delete",
+  UPDATE: "draw.update",
+  SELECTION_CHANGE: "draw.selectionchange",
+  MODE_CHANGE: "draw.modechange",
+  ACTIONABLE: "draw.actionable",
+  RENDER: "draw.render",
+  COMBINE_FEATURES: "draw.combine",
+  UNCOMBINE_FEATURES: "draw.uncombine",
 };
 
 var updateActions = {
-  MOVE: 'move',
-  CHANGE_COORDINATES: 'change_coordinates'
+  MOVE: "move",
+  CHANGE_COORDINATES: "change_coordinates",
 };
 
 var meta = {
-  FEATURE: 'feature',
-  MIDPOINT: 'midpoint',
-  VERTEX: 'vertex'
+  FEATURE: "feature",
+  MIDPOINT: "midpoint",
+  VERTEX: "vertex",
 };
 
 var activeStates = {
-  ACTIVE: 'true',
-  INACTIVE: 'false'
+  ACTIVE: "true",
+  INACTIVE: "false",
 };
 
 var interactions = [
-  'scrollZoom',
-  'boxZoom',
-  'dragRotate',
-  'dragPan',
-  'keyboard',
-  'doubleClickZoom',
-  'touchZoomRotate'
-];
+  "scrollZoom",
+  "boxZoom",
+  "dragRotate",
+  "dragPan",
+  "keyboard",
+  "doubleClickZoom",
+  "touchZoomRotate" ];
 
 var LAT_MIN$1 = -90;
 var LAT_RENDERED_MIN$1 = -85;
@@ -1355,8 +1355,7 @@ function objectToMode(modeObject) {
   };
 }
 
-function events(ctx) {
-
+function events (ctx) {
   var modes = Object.keys(ctx.options.modes).reduce(function (m, k) {
     m[k] = objectToMode(ctx.options.modes[k]);
     return m;
@@ -1368,11 +1367,13 @@ function events(ctx) {
   var currentModeName = null;
   var currentMode = null;
 
-  events.drag = function(event, isDrag) {
-    if (isDrag({
-      point: event.point,
-      time: new Date().getTime()
-    })) {
+  events.drag = function (event, isDrag) {
+    if (
+      isDrag({
+        point: event.point,
+        time: new Date().getTime(),
+      })
+    ) {
       ctx.ui.queueMapClasses({ mouse: cursors.DRAG });
       currentMode.drag(event);
     } else {
@@ -1380,16 +1381,19 @@ function events(ctx) {
     }
   };
 
-  events.mousedrag = function(event) {
+  events.mousedrag = function (event) {
     events.drag(event, function (endInfo) { return !isClick(mouseDownInfo, endInfo); });
   };
 
-  events.touchdrag = function(event) {
+  events.touchdrag = function (event) {
     events.drag(event, function (endInfo) { return !isTap(touchStartInfo, endInfo); });
   };
 
-  events.mousemove = function(event) {
-    var button = event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
+  events.mousemove = function (event) {
+    var button =
+      event.originalEvent.buttons !== undefined
+        ? event.originalEvent.buttons
+        : event.originalEvent.which;
     if (button === 1) {
       return events.mousedrag(event);
     }
@@ -1398,35 +1402,37 @@ function events(ctx) {
     currentMode.mousemove(event);
   };
 
-  events.mousedown = function(event) {
+  events.mousedown = function (event) {
     mouseDownInfo = {
       time: new Date().getTime(),
-      point: event.point
+      point: event.point,
     };
     var target = getFeatureAtAndSetCursors(event, ctx);
     event.featureTarget = target;
     currentMode.mousedown(event);
   };
 
-  events.mouseup = function(event) {
+  events.mouseup = function (event) {
     var target = getFeatureAtAndSetCursors(event, ctx);
     event.featureTarget = target;
 
-    if (isClick(mouseDownInfo, {
-      point: event.point,
-      time: new Date().getTime()
-    })) {
+    if (
+      isClick(mouseDownInfo, {
+        point: event.point,
+        time: new Date().getTime(),
+      })
+    ) {
       currentMode.click(event);
     } else {
       currentMode.mouseup(event);
     }
   };
 
-  events.mouseout = function(event) {
+  events.mouseout = function (event) {
     currentMode.mouseout(event);
   };
 
-  events.touchstart = function(event) {
+  events.touchstart = function (event) {
     // Prevent emulated mouse events because we will fully handle the touch here.
     // This does not stop the touch events from propogating to mapbox though.
     event.originalEvent.preventDefault();
@@ -1436,14 +1442,14 @@ function events(ctx) {
 
     touchStartInfo = {
       time: new Date().getTime(),
-      point: event.point
+      point: event.point,
     };
     var target = featuresAt.touch(event, null, ctx)[0];
     event.featureTarget = target;
     currentMode.touchstart(event);
   };
 
-  events.touchmove = function(event) {
+  events.touchmove = function (event) {
     event.originalEvent.preventDefault();
     if (!ctx.options.touchEnabled) {
       return;
@@ -1453,7 +1459,7 @@ function events(ctx) {
     return events.touchdrag(event);
   };
 
-  events.touchend = function(event) {
+  events.touchend = function (event) {
     event.originalEvent.preventDefault();
     if (!ctx.options.touchEnabled) {
       return;
@@ -1461,10 +1467,12 @@ function events(ctx) {
 
     var target = featuresAt.touch(event, null, ctx)[0];
     event.featureTarget = target;
-    if (isTap(touchStartInfo, {
-      time: new Date().getTime(),
-      point: event.point
-    })) {
+    if (
+      isTap(touchStartInfo, {
+        time: new Date().getTime(),
+        point: event.point,
+      })
+    ) {
       currentMode.tap(event);
     } else {
       currentMode.touchend(event);
@@ -1475,11 +1483,16 @@ function events(ctx) {
   // 46 - Delete
   var isKeyModeValid = function (code) { return !(code === 8 || code === 46 || (code >= 48 && code <= 57)); };
 
-  events.keydown = function(event) {
-    var isMapElement = (event.srcElement || event.target).classList.contains('mapboxgl-canvas');
+  events.keydown = function (event) {
+    var isMapElement = (event.srcElement || event.target).classList.contains(
+      "mapboxgl-canvas"
+    );
     if (!isMapElement) { return; } // we only handle events on the map
 
-    if ((event.keyCode === 8 || event.keyCode === 46) && ctx.options.controls.trash) {
+    if (
+      (event.keyCode === 8 || event.keyCode === 46) &&
+      ctx.options.controls.trash
+    ) {
       event.preventDefault();
       currentMode.trash();
     } else if (isKeyModeValid(event.keyCode)) {
@@ -1493,18 +1506,18 @@ function events(ctx) {
     }
   };
 
-  events.keyup = function(event) {
+  events.keyup = function (event) {
     if (isKeyModeValid(event.keyCode)) {
       currentMode.keyup(event);
     }
   };
 
-  events.zoomend = function() {
+  events.zoomend = function () {
     ctx.store.changeZoom();
   };
 
-  events.data = function(event) {
-    if (event.dataType === 'style') {
+  events.data = function (event) {
+    if (event.dataType === "style") {
       var setup = ctx.setup;
       var map = ctx.map;
       var options = ctx.options;
@@ -1532,7 +1545,7 @@ function events(ctx) {
     currentMode = ModeHandler(mode, ctx);
 
     if (!eventOptions.silent) {
-      ctx.map.fire(events$1.MODE_CHANGE, { mode: modename});
+      ctx.map.fire(events$1.MODE_CHANGE, { mode: modename });
     }
 
     ctx.store.setDirty();
@@ -1542,17 +1555,19 @@ function events(ctx) {
   var actionState = {
     trash: false,
     combineFeatures: false,
-    uncombineFeatures: false
+    uncombineFeatures: false,
   };
 
   function actionable(actions) {
     var changed = false;
     Object.keys(actions).forEach(function (action) {
-      if (actionState[action] === undefined) { throw new Error('Invalid action type'); }
+      if (actionState[action] === undefined)
+        { throw new Error("Invalid action type"); }
       if (actionState[action] !== actions[action]) { changed = true; }
       actionState[action] = actions[action];
     });
-    if (changed) { ctx.map.fire(events$1.ACTIONABLE, { actions: actionState }); }
+    if (changed)
+      { ctx.map.fire(events$1.ACTIONABLE, { actions: actionState }); }
   }
 
   var api = {
@@ -1574,37 +1589,37 @@ function events(ctx) {
       }
     },
     addEventListeners: function addEventListeners() {
-      ctx.map.on('mousemove', events.mousemove);
-      ctx.map.on('mousedown', events.mousedown);
-      ctx.map.on('mouseup', events.mouseup);
-      ctx.map.on('data', events.data);
+      ctx.map.on("mousemove", events.mousemove);
+      ctx.map.on("mousedown", events.mousedown);
+      ctx.map.on("mouseup", events.mouseup);
+      ctx.map.on("data", events.data);
 
-      ctx.map.on('touchmove', events.touchmove);
-      ctx.map.on('touchstart', events.touchstart);
-      ctx.map.on('touchend', events.touchend);
+      ctx.map.on("touchmove", events.touchmove);
+      ctx.map.on("touchstart", events.touchstart);
+      ctx.map.on("touchend", events.touchend);
 
-      ctx.container.addEventListener('mouseout', events.mouseout);
+      ctx.container.addEventListener("mouseout", events.mouseout);
 
       if (ctx.options.keybindings) {
-        ctx.container.addEventListener('keydown', events.keydown);
-        ctx.container.addEventListener('keyup', events.keyup);
+        ctx.container.addEventListener("keydown", events.keydown);
+        ctx.container.addEventListener("keyup", events.keyup);
       }
     },
     removeEventListeners: function removeEventListeners() {
-      ctx.map.off('mousemove', events.mousemove);
-      ctx.map.off('mousedown', events.mousedown);
-      ctx.map.off('mouseup', events.mouseup);
-      ctx.map.off('data', events.data);
+      ctx.map.off("mousemove", events.mousemove);
+      ctx.map.off("mousedown", events.mousedown);
+      ctx.map.off("mouseup", events.mouseup);
+      ctx.map.off("data", events.data);
 
-      ctx.map.off('touchmove', events.touchmove);
-      ctx.map.off('touchstart', events.touchstart);
-      ctx.map.off('touchend', events.touchend);
+      ctx.map.off("touchmove", events.touchmove);
+      ctx.map.off("touchstart", events.touchstart);
+      ctx.map.off("touchend", events.touchend);
 
-      ctx.container.removeEventListener('mouseout', events.mouseout);
+      ctx.container.removeEventListener("mouseout", events.mouseout);
 
       if (ctx.options.keybindings) {
-        ctx.container.removeEventListener('keydown', events.keydown);
-        ctx.container.removeEventListener('keyup', events.keyup);
+        ctx.container.removeEventListener("keydown", events.keydown);
+        ctx.container.removeEventListener("keyup", events.keyup);
       }
     },
     trash: function trash(options) {
@@ -1618,7 +1633,7 @@ function events(ctx) {
     },
     getMode: function getMode() {
       return currentModeName;
-    }
+    },
   };
 
   return api;
@@ -2336,6 +2351,7 @@ function runSetup (ctx) {
         var _fire = map.fire;
         map.fire = function (type, event) {
           // eslint-disable-next-line
+
           var args = arguments;
 
           if (_fire.length === 1 && arguments.length !== 1) {
@@ -3874,7 +3890,7 @@ function moveFeatures(features, delta) {
 
 var SimpleSelect = {};
 
-SimpleSelect.onSetup = function(opts) {
+SimpleSelect.onSetup = function (opts) {
   var this$1$1 = this;
 
   // turn the opts into state.
@@ -3886,44 +3902,55 @@ SimpleSelect.onSetup = function(opts) {
     canBoxSelect: false,
     dragMoving: false,
     canDragMove: false,
-    initiallySelectedFeatureIds: opts.featureIds || []
+    initiallySelectedFeatureIds: opts.featureIds || [],
   };
 
-  this.setSelected(state.initiallySelectedFeatureIds.filter(function (id) { return this$1$1.getFeature(id) !== undefined; }));
+  this.setSelected(
+    state.initiallySelectedFeatureIds.filter(
+      function (id) { return this$1$1.getFeature(id) !== undefined; }
+    )
+  );
   this.fireActionable();
 
   this.setActionableState({
     combineFeatures: true,
     uncombineFeatures: true,
-    trash: true
+    trash: true,
   });
 
   return state;
 };
 
-SimpleSelect.fireUpdate = function() {
+SimpleSelect.fireUpdate = function () {
   this.map.fire(events$1.UPDATE, {
     action: updateActions.MOVE,
-    features: this.getSelected().map(function (f) { return f.toGeoJSON(); })
+    features: this.getSelected().map(function (f) { return f.toGeoJSON(); }),
   });
 };
 
-SimpleSelect.fireActionable = function() {
+SimpleSelect.fireFeatureMoving = function () {
+  console.log("moving");
+  this.map.fire(events$1.FEATURE_MOVING, {
+    action: updateActions.MOVE,
+    features: this.getSelected().map(function (f) { return f.toGeoJSON(); }),
+  });
+};
+
+SimpleSelect.fireActionable = function () {
   var this$1$1 = this;
 
   var selectedFeatures = this.getSelected();
 
-  var multiFeatures = selectedFeatures.filter(
-    function (feature) { return this$1$1.isInstanceOf('MultiFeature', feature); }
+  var multiFeatures = selectedFeatures.filter(function (feature) { return this$1$1.isInstanceOf("MultiFeature", feature); }
   );
 
   var combineFeatures = false;
 
   if (selectedFeatures.length > 1) {
     combineFeatures = true;
-    var featureType = selectedFeatures[0].type.replace('Multi', '');
+    var featureType = selectedFeatures[0].type.replace("Multi", "");
     selectedFeatures.forEach(function (feature) {
-      if (feature.type.replace('Multi', '') !== featureType) {
+      if (feature.type.replace("Multi", "") !== featureType) {
         combineFeatures = false;
       }
     });
@@ -3933,13 +3960,16 @@ SimpleSelect.fireActionable = function() {
   var trash = selectedFeatures.length > 0;
 
   this.setActionableState({
-    combineFeatures: combineFeatures, uncombineFeatures: uncombineFeatures, trash: trash
+    combineFeatures: combineFeatures,
+    uncombineFeatures: uncombineFeatures,
+    trash: trash,
   });
 };
 
-SimpleSelect.getUniqueIds = function(allFeatures) {
+SimpleSelect.getUniqueIds = function (allFeatures) {
   if (!allFeatures.length) { return []; }
-  var ids = allFeatures.map(function (s) { return s.properties.id; })
+  var ids = allFeatures
+    .map(function (s) { return s.properties.id; })
     .filter(function (id) { return id !== undefined; })
     .reduce(function (memo, id) {
       memo.add(id);
@@ -3949,9 +3979,10 @@ SimpleSelect.getUniqueIds = function(allFeatures) {
   return ids.values();
 };
 
-SimpleSelect.stopExtendedInteractions = function(state) {
+SimpleSelect.stopExtendedInteractions = function (state) {
   if (state.boxSelectElement) {
-    if (state.boxSelectElement.parentNode) { state.boxSelectElement.parentNode.removeChild(state.boxSelectElement); }
+    if (state.boxSelectElement.parentNode)
+      { state.boxSelectElement.parentNode.removeChild(state.boxSelectElement); }
     state.boxSelectElement = null;
   }
 
@@ -3963,11 +3994,11 @@ SimpleSelect.stopExtendedInteractions = function(state) {
   state.canDragMove = false;
 };
 
-SimpleSelect.onStop = function() {
+SimpleSelect.onStop = function () {
   doubleClickZoom.enable(this);
 };
 
-SimpleSelect.onMouseMove = function(state, e) {
+SimpleSelect.onMouseMove = function (state, e) {
   var isFeature$1 = isFeature(e);
   if (isFeature$1 && state.dragMoving) { this.fireUpdate(); }
 
@@ -3982,7 +4013,7 @@ SimpleSelect.onMouseMove = function(state, e) {
   return true;
 };
 
-SimpleSelect.onMouseOut = function(state) {
+SimpleSelect.onMouseOut = function (state) {
   // As soon as you mouse leaves the canvas, update the feature
   if (state.dragMoving) { return this.fireUpdate(); }
 
@@ -3990,10 +4021,11 @@ SimpleSelect.onMouseOut = function(state) {
   return true;
 };
 
-SimpleSelect.onTap = SimpleSelect.onClick = function(state, e) {
+SimpleSelect.onTap = SimpleSelect.onClick = function (state, e) {
   // Click (with or without shift) on no feature
   if (noTarget(e)) { return this.clickAnywhere(state, e); } // also tap
-  if (isOfMetaType(meta.VERTEX)(e)) { return this.clickOnVertex(state, e); } //tap
+  if (isOfMetaType(meta.VERTEX)(e))
+    { return this.clickOnVertex(state, e); } //tap
   if (isFeature(e)) { return this.clickOnFeature(state, e); }
 };
 
@@ -4010,17 +4042,17 @@ SimpleSelect.clickAnywhere = function (state) {
   this.stopExtendedInteractions(state);
 };
 
-SimpleSelect.clickOnVertex = function(state, e) {
+SimpleSelect.clickOnVertex = function (state, e) {
   // Enter direct select mode
   this.changeMode(modes$1.DIRECT_SELECT, {
     featureId: e.featureTarget.properties.parent,
     coordPath: e.featureTarget.properties.coord_path,
-    startPos: e.lngLat
+    startPos: e.lngLat,
   });
   this.updateUIClasses({ mouse: cursors.MOVE });
 };
 
-SimpleSelect.startOnActiveFeature = function(state, e) {
+SimpleSelect.startOnActiveFeature = function (state, e) {
   // Stop any already-underway extended interactions
   this.stopExtendedInteractions(state);
 
@@ -4035,7 +4067,7 @@ SimpleSelect.startOnActiveFeature = function(state, e) {
   state.dragMoveLocation = e.lngLat;
 };
 
-SimpleSelect.clickOnFeature = function(state, e) {
+SimpleSelect.clickOnFeature = function (state, e) {
   var this$1$1 = this;
 
   // Stop everything
@@ -4048,10 +4080,14 @@ SimpleSelect.clickOnFeature = function(state, e) {
   var isFeatureSelected = this.isSelected(featureId);
 
   // Click (without shift) on any selected feature but a point
-  if (!isShiftClick && isFeatureSelected && this.getFeature(featureId).type !== geojsonTypes.POINT) {
+  if (
+    !isShiftClick &&
+    isFeatureSelected &&
+    this.getFeature(featureId).type !== geojsonTypes.POINT
+  ) {
     // Enter direct select mode
     return this.changeMode(modes$1.DIRECT_SELECT, {
-      featureId: featureId
+      featureId: featureId,
     });
   }
 
@@ -4063,12 +4099,12 @@ SimpleSelect.clickOnFeature = function(state, e) {
     if (selectedFeatureIds.length === 1) {
       doubleClickZoom.enable(this);
     }
-  // Shift-click on an unselected feature
+    // Shift-click on an unselected feature
   } else if (!isFeatureSelected && isShiftClick) {
     // Add it to the selection
     this.select(featureId);
     this.updateUIClasses({ mouse: cursors.MOVE });
-  // Click (without shift) on an unselected feature
+    // Click (without shift) on an unselected feature
   } else if (!isFeatureSelected && !isShiftClick) {
     // Make it the only selected feature
     selectedFeatureIds.forEach(function (id) { return this$1$1.doRender(id); });
@@ -4080,35 +4116,42 @@ SimpleSelect.clickOnFeature = function(state, e) {
   this.doRender(featureId);
 };
 
-SimpleSelect.onMouseDown = function(state, e) {
-  if (isActiveFeature(e)) { return this.startOnActiveFeature(state, e); }
-  if (this.drawConfig.boxSelect && isShiftMousedown(e)) { return this.startBoxSelect(state, e); }
+SimpleSelect.onMouseDown = function (state, e) {
+  if (isActiveFeature(e))
+    { return this.startOnActiveFeature(state, e); }
+  if (this.drawConfig.boxSelect && isShiftMousedown(e))
+    { return this.startBoxSelect(state, e); }
 };
 
-SimpleSelect.startBoxSelect = function(state, e) {
+SimpleSelect.startBoxSelect = function (state, e) {
   this.stopExtendedInteractions(state);
   this.map.dragPan.disable();
   // Enable box select
-  state.boxSelectStartLocation = mouseEventPoint(e.originalEvent, this.map.getContainer());
+  state.boxSelectStartLocation = mouseEventPoint(
+    e.originalEvent,
+    this.map.getContainer()
+  );
   state.canBoxSelect = true;
 };
 
-SimpleSelect.onTouchStart = function(state, e) {
-  if (isActiveFeature(e)) { return this.startOnActiveFeature(state, e); }
+SimpleSelect.onTouchStart = function (state, e) {
+  if (isActiveFeature(e))
+    { return this.startOnActiveFeature(state, e); }
 };
 
-SimpleSelect.onDrag = function(state, e) {
+SimpleSelect.onDrag = function (state, e) {
   if (state.canDragMove) { return this.dragMove(state, e); }
-  if (this.drawConfig.boxSelect && state.canBoxSelect) { return this.whileBoxSelect(state, e); }
+  if (this.drawConfig.boxSelect && state.canBoxSelect)
+    { return this.whileBoxSelect(state, e); }
 };
 
-SimpleSelect.whileBoxSelect = function(state, e) {
+SimpleSelect.whileBoxSelect = function (state, e) {
   state.boxSelecting = true;
   this.updateUIClasses({ mouse: cursors.ADD });
 
   // Create the box node if it doesn't exist
   if (!state.boxSelectElement) {
-    state.boxSelectElement = document.createElement('div');
+    state.boxSelectElement = document.createElement("div");
     state.boxSelectElement.classList.add(classes.BOX_SELECT);
     this.map.getContainer().appendChild(state.boxSelectElement);
   }
@@ -4126,22 +4169,24 @@ SimpleSelect.whileBoxSelect = function(state, e) {
   state.boxSelectElement.style.height = (maxY - minY) + "px";
 };
 
-SimpleSelect.dragMove = function(state, e) {
+SimpleSelect.dragMove = function (state, e) {
   // Dragging when drag move is enabled
   state.dragMoving = true;
   e.originalEvent.stopPropagation();
 
   var delta = {
     lng: e.lngLat.lng - state.dragMoveLocation.lng,
-    lat: e.lngLat.lat - state.dragMoveLocation.lat
+    lat: e.lngLat.lat - state.dragMoveLocation.lat,
   };
+
+  this.fireFeatureMoving();
 
   moveFeatures(this.getSelected(), delta);
 
   state.dragMoveLocation = e.lngLat;
 };
 
-SimpleSelect.onTouchEnd = SimpleSelect.onMouseUp = function(state, e) {
+SimpleSelect.onTouchEnd = SimpleSelect.onMouseUp = function (state, e) {
   var this$1$1 = this;
 
   // End any extended interactions
@@ -4150,11 +4195,11 @@ SimpleSelect.onTouchEnd = SimpleSelect.onMouseUp = function(state, e) {
   } else if (state.boxSelecting) {
     var bbox = [
       state.boxSelectStartLocation,
-      mouseEventPoint(e.originalEvent, this.map.getContainer())
-    ];
-    var featuresInBox = this.featuresAt(null, bbox, 'click');
-    var idsToSelect = this.getUniqueIds(featuresInBox)
-      .filter(function (id) { return !this$1$1.isSelected(id); });
+      mouseEventPoint(e.originalEvent, this.map.getContainer()) ];
+    var featuresInBox = this.featuresAt(null, bbox, "click");
+    var idsToSelect = this.getUniqueIds(featuresInBox).filter(
+      function (id) { return !this$1$1.isSelected(id); }
+    );
 
     if (idsToSelect.length) {
       this.select(idsToSelect);
@@ -4165,36 +4210,41 @@ SimpleSelect.onTouchEnd = SimpleSelect.onMouseUp = function(state, e) {
   this.stopExtendedInteractions(state);
 };
 
-SimpleSelect.toDisplayFeatures = function(state, geojson, display) {
-  geojson.properties.active = (this.isSelected(geojson.properties.id)) ?
-    activeStates.ACTIVE : activeStates.INACTIVE;
+SimpleSelect.toDisplayFeatures = function (state, geojson, display) {
+  geojson.properties.active = this.isSelected(geojson.properties.id)
+    ? activeStates.ACTIVE
+    : activeStates.INACTIVE;
   display(geojson);
   this.fireActionable();
-  if (geojson.properties.active !== activeStates.ACTIVE ||
-    geojson.geometry.type === geojsonTypes.POINT) { return; }
+  if (
+    geojson.properties.active !== activeStates.ACTIVE ||
+    geojson.geometry.type === geojsonTypes.POINT
+  )
+    { return; }
   createSupplementaryPoints(geojson).forEach(display);
 };
 
-SimpleSelect.onTrash = function() {
+SimpleSelect.onTrash = function () {
   this.deleteFeature(this.getSelectedIds());
   this.fireActionable();
 };
 
-SimpleSelect.onCombineFeatures = function() {
+SimpleSelect.onCombineFeatures = function () {
   var selectedFeatures = this.getSelected();
 
   if (selectedFeatures.length === 0 || selectedFeatures.length < 2) { return; }
 
-  var coordinates = [], featuresCombined = [];
-  var featureType = selectedFeatures[0].type.replace('Multi', '');
+  var coordinates = [],
+    featuresCombined = [];
+  var featureType = selectedFeatures[0].type.replace("Multi", "");
 
   for (var i = 0; i < selectedFeatures.length; i++) {
     var feature = selectedFeatures[i];
 
-    if (feature.type.replace('Multi', '') !== featureType) {
+    if (feature.type.replace("Multi", "") !== featureType) {
       return;
     }
-    if (feature.type.includes('Multi')) {
+    if (feature.type.includes("Multi")) {
       feature.getCoordinates().forEach(function (subcoords) {
         coordinates.push(subcoords);
       });
@@ -4211,8 +4261,8 @@ SimpleSelect.onCombineFeatures = function() {
       properties: featuresCombined[0].properties,
       geometry: {
         type: ("Multi" + featureType),
-        coordinates: coordinates
-      }
+        coordinates: coordinates,
+      },
     });
 
     this.addFeature(multiFeature);
@@ -4221,13 +4271,13 @@ SimpleSelect.onCombineFeatures = function() {
 
     this.map.fire(events$1.COMBINE_FEATURES, {
       createdFeatures: [multiFeature.toGeoJSON()],
-      deletedFeatures: featuresCombined
+      deletedFeatures: featuresCombined,
     });
   }
   this.fireActionable();
 };
 
-SimpleSelect.onUncombineFeatures = function() {
+SimpleSelect.onUncombineFeatures = function () {
   var this$1$1 = this;
 
   var selectedFeatures = this.getSelected();
@@ -4239,7 +4289,7 @@ SimpleSelect.onUncombineFeatures = function() {
   var loop = function ( i ) {
     var feature = selectedFeatures[i];
 
-    if (this$1$1.isInstanceOf('MultiFeature', feature)) {
+    if (this$1$1.isInstanceOf("MultiFeature", feature)) {
       feature.getFeatures().forEach(function (subFeature) {
         this$1$1.addFeature(subFeature);
         subFeature.properties = feature.properties;
@@ -4256,7 +4306,7 @@ SimpleSelect.onUncombineFeatures = function() {
   if (createdFeatures.length > 1) {
     this.map.fire(events$1.UNCOMBINE_FEATURES, {
       createdFeatures: createdFeatures,
-      deletedFeatures: featuresUncombined
+      deletedFeatures: featuresUncombined,
     });
   }
   this.fireActionable();
