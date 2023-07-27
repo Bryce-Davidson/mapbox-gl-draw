@@ -52,7 +52,8 @@ export const modes = {
 };
 
 export const events = {
-  FEATURE_MOVING: "draw.featuremoving",
+  FEATURE_DRAGGING: "draw.feature.dragging",
+  FEATURE_DRAG_START: "draw.feature.dragstart",
   CREATE: "draw.create",
   DELETE: "draw.delete",
   UPDATE: "draw.update",

@@ -302,7 +302,8 @@ var modes$1 = {
 };
 
 var events$1 = {
-  FEATURE_MOVING: "draw.featuremoving",
+  FEATURE_DRAGGING: "draw.feature.dragging",
+  FEATURE_DRAG_START: "draw.feature.dragstart",
   CREATE: "draw.create",
   DELETE: "draw.delete",
   UPDATE: "draw.update",
@@ -3902,6 +3903,7 @@ SimpleSelect.onSetup = function (opts) {
     canBoxSelect: false,
     dragMoving: false,
     canDragMove: false,
+    featureDragStarted: false,
     initiallySelectedFeatureIds: opts.featureIds || [],
   };
 
@@ -3921,15 +3923,27 @@ SimpleSelect.onSetup = function (opts) {
   return state;
 };
 
-SimpleSelect.fireUpdate = function () {
+SimpleSelect.fireUpdate = function (state) {
+  //   console.log("FIRE UPDATE");
+  state.featureDragStarted = false;
   this.map.fire(events$1.UPDATE, {
     action: updateActions.MOVE,
     features: this.getSelected().map(function (f) { return f.toGeoJSON(); }),
   });
 };
 
-SimpleSelect.fireFeatureMoving = function () {
-  this.map.fire(events$1.FEATURE_MOVING, {
+SimpleSelect.fireFeatureDragStart = function (state) {
+  //   console.log("DRAG START");
+  state.featureDragStarted = true;
+  this.map.fire(events$1.FEATURE_DRAG_START, {
+    action: updateActions.MOVE,
+    features: this.getSelected().map(function (f) { return f.toGeoJSON(); }),
+  });
+};
+
+SimpleSelect.fireFeatureDragging = function () {
+  //   console.log("DRAGGING");
+  this.map.fire(events$1.FEATURE_DRAGGING, {
     action: updateActions.MOVE,
     features: this.getSelected().map(function (f) { return f.toGeoJSON(); }),
   });
@@ -3999,7 +4013,7 @@ SimpleSelect.onStop = function () {
 
 SimpleSelect.onMouseMove = function (state, e) {
   var isFeature$1 = isFeature(e);
-  if (isFeature$1 && state.dragMoving) { this.fireUpdate(); }
+  if (isFeature$1 && state.dragMoving) { this.fireUpdate(state); }
 
   // On mousemove that is not a drag, stop extended interactions.
   // This is useful if you drag off the canvas, release the button,
@@ -4014,7 +4028,7 @@ SimpleSelect.onMouseMove = function (state, e) {
 
 SimpleSelect.onMouseOut = function (state) {
   // As soon as you mouse leaves the canvas, update the feature
-  if (state.dragMoving) { return this.fireUpdate(); }
+  if (state.dragMoving) { return this.fireUpdate(state); }
 
   // Skip render
   return true;
@@ -4178,7 +4192,8 @@ SimpleSelect.dragMove = function (state, e) {
     lat: e.lngLat.lat - state.dragMoveLocation.lat,
   };
 
-  this.fireFeatureMoving();
+  if (!state.featureDragStarted) { this.fireFeatureDragStart(state); }
+  this.fireFeatureDragging();
 
   moveFeatures(this.getSelected(), delta);
 
@@ -4190,7 +4205,7 @@ SimpleSelect.onTouchEnd = SimpleSelect.onMouseUp = function (state, e) {
 
   // End any extended interactions
   if (state.dragMoving) {
-    this.fireUpdate();
+    this.fireUpdate(state);
   } else if (state.boxSelecting) {
     var bbox = [
       state.boxSelectStartLocation,
