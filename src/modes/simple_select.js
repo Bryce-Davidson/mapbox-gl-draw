@@ -122,6 +122,7 @@ SimpleSelect.stopExtendedInteractions = function (state) {
 };
 
 SimpleSelect.onStop = function () {
+  console.log("Testing");
   doubleClickZoom.enable(this);
 };
 
