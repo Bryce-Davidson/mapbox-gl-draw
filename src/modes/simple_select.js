@@ -45,7 +45,6 @@ SimpleSelect.fireUpdate = function () {
 };
 
 SimpleSelect.fireFeatureMoving = function () {
-  console.log("moving");
   this.map.fire(Constants.events.FEATURE_MOVING, {
     action: Constants.updateActions.MOVE,
     features: this.getSelected().map((f) => f.toGeoJSON()),

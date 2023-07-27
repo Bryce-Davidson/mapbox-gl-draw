@@ -30,6 +30,10 @@ const map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v8",
 });
 
+// map.on("draw.featuremoving", (e) => {
+//   console.log(e);
+// });
+
 map.addControl(
   new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
