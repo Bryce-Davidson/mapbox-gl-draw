@@ -64,6 +64,14 @@ SimpleSelect.fireFeatureDragging = function () {
   });
 };
 
+SimpleSelect.fireFeatureDragEnd = function (state) {
+  //   console.log("DRAG END");
+  this.map.fire(Constants.events.FEATURE_DRAG_END, {
+    action: Constants.updateActions.MOVE,
+    features: this.getSelected().map((f) => f.toGeoJSON()),
+  });
+};
+
 SimpleSelect.fireActionable = function () {
   const selectedFeatures = this.getSelected();
 

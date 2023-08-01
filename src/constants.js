@@ -54,6 +54,7 @@ export const modes = {
 export const events = {
   FEATURE_DRAGGING: "draw.feature.dragging",
   FEATURE_DRAG_START: "draw.feature.dragstart",
+  FEATURE_DRAG_END: "draw.feature.dragend",
   CREATE: "draw.create",
   DELETE: "draw.delete",
   UPDATE: "draw.update",
