@@ -66,6 +66,7 @@ SimpleSelect.fireFeatureDragging = function () {
 
 SimpleSelect.fireFeatureDragEnd = function (state) {
   //   console.log("DRAG END");
+  state.featureDragStarted = false;
   this.map.fire(Constants.events.FEATURE_DRAG_END, {
     action: Constants.updateActions.MOVE,
     features: this.getSelected().map((f) => f.toGeoJSON()),
